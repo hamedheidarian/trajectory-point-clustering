@@ -19,7 +19,7 @@ public class CsvReader {
 
     public List<Point> loadCsvContentToList(
             final BufferedReader bufferedReader) throws IOException {
-        try (bufferedReader) {
+        try  {
             return bufferedReader.lines().skip(1).map(line -> {
                 final String[] lineArray = pattern.split(line);
                 return Point
@@ -33,6 +33,8 @@ public class CsvReader {
                         .lon(Float.parseFloat(lineArray[7]))
                         .build();
             }).collect(Collectors.toList());
+        } finally {
+            bufferedReader.close();
         }
     }
 }
