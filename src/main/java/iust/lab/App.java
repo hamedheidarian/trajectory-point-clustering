@@ -15,9 +15,6 @@ import java.util.Properties;
 
 import static org.apache.hadoop.fs.Path.SEPARATOR;
 
-/**
- * Hello world!
- */
 public class App {
     private static final String SPLITTER = ",";
     private static final String FILE_PATH = "src" + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR +
@@ -66,31 +63,4 @@ public class App {
             }
         });
     }
-
-
-//    public static void main(String[] args) throws IOException, CsvValidationException {
-//        List<List<String>> records = new ArrayList<>();
-//        try (CSVReader csvReader = new CSVReader(new FileReader(dataFile))) {
-//            String[] values;
-//            while ((values = csvReader.readNext()) != null) {
-//                System.out.println(Arrays.toString(values));
-//                records.add(Arrays.asList(values));
-//            }
-//        }
-
-//        System.out.println(records);
-
-//        Properties props = new Properties();
-//        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-//        props.put(ProducerConfig.CLIENT_ID_CONFIG, "client");
-//        props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
-//        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, IntegerSerializer.class.getName());
-//        KafkaProducer<Integer, Integer> kafkaProducer = new KafkaProducer<>(props);
-    //IntStream randoms = ThreadLocalRandom.current().ints();
-//        ProducerRecord<Integer, Integer> record = new ProducerRecord<>("test",
-//                1400);
-//            RecordMetadata metadata = kafkaProducer.send(record).get();
-    // System.out.println("Record sent with key " + index + " to partition " + metadata.partition()
-    //        + " with offset " + metadata.offset());
-//    }
 }
