@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Getter
@@ -12,8 +13,7 @@ import java.time.LocalTime;
 @Builder
 public class Point {
     private String id;
-    private LocalTime time;
-    private LocalDate date;
+    private LocalDateTime dateTime;
     private int altitude;
     private int speed;
     //    private int heading;

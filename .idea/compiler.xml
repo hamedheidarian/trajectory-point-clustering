@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="simple-bd-scenario-master" />
+        <module name="trajectory-detection" />
         <module name="numgen" />
       </profile>
     </annotationProcessing>

@@ -11,7 +11,11 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import static org.apache.hadoop.fs.Path.SEPARATOR;
 
@@ -26,7 +30,6 @@ public class App {
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
-
     public static void main(String[] args) throws IOException {
 
         final File csvFile = new File(FILE_PATH);
