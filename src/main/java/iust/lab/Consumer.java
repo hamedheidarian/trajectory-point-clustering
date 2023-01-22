@@ -1,13 +1,17 @@
 package iust.lab;
 
-import org.apache.spark.api.java.JavaRDD;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.spark.SparkConf;
+import org.apache.spark.TaskContext;
+import org.apache.spark.api.java.*;
+import org.apache.spark.api.java.function.*;
+import org.apache.spark.streaming.Durations;
+import org.apache.spark.streaming.StreamingContext;
+import org.apache.spark.streaming.api.java.*;
+import org.apache.spark.streaming.kafka010.*;
 import org.apache.spark.mllib.clustering.KMeans;
 import org.apache.spark.mllib.clustering.KMeansModel;
-import org.apache.spark.mllib.linalg.Vector;
-import org.apache.spark.mllib.linalg.Vectors;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.SparkSession;
-import org.apache.spark.sql.functions;
+
 import org.apache.spark.sql.streaming.StreamingQueryException;
 
 import java.io.IOException;
@@ -19,9 +23,15 @@ import java.util.concurrent.TimeoutException;
 public class Consumer {
     public static void main(String... strs) throws InterruptedException, StreamingQueryException, TimeoutException, IOException, URISyntaxException {
 
-        SparkSession sparkSession = SparkSession.builder().master("local[3]")
-                .appName("name").getOrCreate();
-
+//        SparkSession sparkSession = SparkSession.builder().master("local[3]")
+//                .appName("name").getOrCreate();
+        StreamingContext streamingContext = new JavaStreamingContext("local[3]", "name", Durations.seconds(1));
+        JavaInputDStream<ConsumerRecord<String, String>> stream =
+                KafkaUtils.createDirectStream(
+                        streamingContext,
+                        LocationStrategies.PreferConsistent(),
+                        ConsumerStrategies.<String, String>Subscribe(topics, kafkaParams)
+                );
 //        sparkSession.udf().register("uuid", (String s) -> UUID.randomUUID().toString()
 //                , org.apache.spark.sql.types.DataTypes.StringType);
 //        sparkSession.udf().register("ba2i", (byte[] x) -> ByteBuffer.wrap(x).getInt() * 2,
@@ -29,6 +39,7 @@ public class Consumer {
         Dataset<org.apache.spark.sql.Row> df = sparkSession.readStream().format("kafka").
                 option("kafka.bootstrap.servers", "localhost:9092")
                 .option("subscribe", "test").load();
+//        df.map(r -> r.get)
         int numClusters = 2;
         int numIterations = 20;
         KMeansModel clusters = KMeans.train(df.rdd(), numClusters, numIterations);
