@@ -11,7 +11,11 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 import static org.apache.hadoop.fs.Path.SEPARATOR;
 
@@ -26,7 +30,6 @@ public class App {
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
-
     public static void main(String[] args) throws IOException {
 
         final File csvFile = new File(FILE_PATH);
@@ -49,18 +52,20 @@ public class App {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 "org.apache.kafka.common.serialization.StringSerializer");
         final KafkaProducer<String, String> producer = new KafkaProducer<>(props);
-        final KafkaPointProducer kafkaInsuranceProducer =
+        final KafkaPointProducer kafkaPointProducer =
                 new KafkaPointProducer(
                         producer,
                         TOPIC_NAME);
-        pointDataList.forEach(policy -> {
+        pointDataList.forEach(point -> {
             try {
-                kafkaInsuranceProducer.send(mapper.writeValueAsString(policy));
-            } catch (JsonProcessingException e) {
+                System.out.println(point);
+                kafkaPointProducer.send(mapper.writeValueAsString(point));
+                System.out.println("sent");
+            } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                kafkaInsuranceProducer.close();
             }
         });
+        kafkaPointProducer.flush();
+        kafkaPointProducer.close();
     }
 }

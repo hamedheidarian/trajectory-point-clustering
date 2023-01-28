@@ -2,6 +2,9 @@ package iust.lab.utils;
 
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
+
+import java.util.concurrent.ExecutionException;
 
 public class KafkaPointProducer {
     final Producer<String, String> producer;
@@ -17,8 +20,12 @@ public class KafkaPointProducer {
         this.producer.close();
     }
 
-    public void send(final String message) {
-        producer.send(new ProducerRecord<>(this.topicName, message));
-        this.producer.flush();
+    public void send(final String message) throws ExecutionException, InterruptedException {
+        RecordMetadata rm = producer.send(new ProducerRecord<>(this.topicName, message)).get();
+        System.out.println(rm);
+    }
+
+    public void flush() {
+        producer.flush();
     }
 }
