@@ -1,22 +1,23 @@
 package iust.lab.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Data
+@Getter
 @Setter
 @Builder
-public class Point {
-    private String id;
-    private long dateTime;
-    private int altitude;
-    private int speed;
-    private float lat;
-    private float lon;
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class Point implements Serializable {
+    private Integer id;
+    private Long dateTime;
+    private Integer altitude;
+    private Integer speed;
+    private Float lat;
+    private Float lon;
 }

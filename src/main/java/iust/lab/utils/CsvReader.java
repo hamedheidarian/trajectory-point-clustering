@@ -36,7 +36,7 @@ public class CsvReader {
                 lineArray[2] = lineArray[2].split("/")[0].length() < 2 ? "0" + lineArray[2] : lineArray[2];
                 return Point
                         .builder()
-                        .id(lineArray[0])
+                        .id(Integer.parseInt(lineArray[0]))
                         .dateTime(LocalDateTime.of(LocalDate.parse(lineArray[2],
                                 DateTimeFormatter.ofPattern("MM/dd/yyyy")),
                                 LocalTime.parse(lineArray[1])).toEpochSecond(ZoneOffset.UTC))

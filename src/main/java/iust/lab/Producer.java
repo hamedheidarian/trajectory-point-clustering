@@ -1,6 +1,5 @@
 package iust.lab;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.ImmutableList;
@@ -11,15 +10,11 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import static org.apache.hadoop.fs.Path.SEPARATOR;
 
-public class App {
+public class Producer {
     private static final String SPLITTER = ",";
     private static final String FILE_PATH = "src" + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR +
             "09-18-20_adsb" + SEPARATOR + "1.csv";
