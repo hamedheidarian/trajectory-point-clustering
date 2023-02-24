@@ -5,12 +5,10 @@ import iust.lab.model.Point;
 import org.apache.commons.lang3.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
 
 public class PointDeserializer implements Deserializer<Point> {
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
@@ -19,7 +17,7 @@ public class PointDeserializer implements Deserializer<Point> {
     @Override
     public Point deserialize(String topic, byte[] data) {
         try {
-            if (data == null){
+            if (data == null) {
                 System.out.println("Null received at deserializing");
                 return null;
             }

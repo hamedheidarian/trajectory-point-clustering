@@ -10,14 +10,14 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
-import static org.apache.hadoop.fs.Path.SEPARATOR;
 
 public class Producer {
     private static final String SPLITTER = ",";
-    private static final String FILE_PATH = "src" + SEPARATOR + "main" + SEPARATOR + "resources" + SEPARATOR +
-            "09-18-20_adsb" + SEPARATOR + "1.csv";
+    private static final Path FILE_PATH = Paths.get("src", "main", "resources", "09-18-20_adsb", "1.csv");
     private static final String SERVER = "localhost:9092";
     private static final String TOPIC_NAME = "point-data";
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -25,9 +25,10 @@ public class Producer {
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
+
     public static void main(String[] args) throws IOException {
 
-        final File csvFile = new File(FILE_PATH);
+        final File csvFile = new File(FILE_PATH.toUri());
         if (!csvFile.exists()) {
             throw new FileNotFoundException("File not found");
         }

@@ -3,9 +3,6 @@ package iust.lab.model;
 import lombok.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Getter
 @Setter
